@@ -4,9 +4,9 @@ const {AuthenticationError} = require('apollo-server-express')
 
 const resolvers = {
     Query: {
-        users: async (parent, args, context, info) => {
-            return await User.find()
-        },
+        // users: async (parent, args, context, info) => {
+        //     return await User.find()
+        // },
         user: async (parent, args, context, info) => {
             
             if (!args._id && !args.email && !args.username) {
@@ -23,7 +23,11 @@ const resolvers = {
                 where.username = args.username
             }
             return await User.findOne(where)
+                .select('-__v -password')
+                .populate('savedGames')
         }
+        //searchedVideogame query
+        //singleVideogame
     },
     Mutation: {
         login: async (parent, args, context, info) => {
@@ -55,6 +59,8 @@ const resolvers = {
         deleteUser: async (parent, args, context, info) => {
             return await User.findByIdAndDelete(args._id)
         }
+        //add videogame
+        //deletevideogame
     }
 }
 

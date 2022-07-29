@@ -1,10 +1,25 @@
 const {gql} = require('apollo-server-express');
 
 const typeDefs = gql`
+    type Game {
+        gameId: Int
+        name: String
+        description: String
+        metacritic: Int
+        released: String
+        background_image: String
+        website: String
+        rating: Int
+        metacritic_url: String
+        esrb_rating: String
+        platforms: [String]
+    }
+
     type User {
         _id: ID
         username: String
         email: String
+        savedGames: [Game]
     }
 
     type Auth {
