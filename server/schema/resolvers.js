@@ -26,8 +26,6 @@ const resolvers = {
                 .select('-__v -password')
                 .populate('savedGames')
         }
-        //searchedVideogame query
-        //singleVideogame
     },
     Mutation: {
         login: async (parent, args, context, info) => {
@@ -58,9 +56,31 @@ const resolvers = {
         },
         deleteUser: async (parent, args, context, info) => {
             return await User.findByIdAndDelete(args._id)
-        }
+        },
         //add videogame
+        saveGame: async (parent, {gameId,name, description, metacritic, released, background_image, website, rating, metacritic_url, esrb_rating, platforms}, context) => {
+            if (context.user) {
+                const updatedUser = await User.findOneAndUpdate(
+                    {_id: context.user._id},
+                    {$addToSet: { savedGames: {gameId,name, description, metacritic, released, background_image, website, rating, metacritic_url, esrb_rating, platforms}}},
+                    {new: true}
+                )
+                return updatedUser;
+            }
+            throw new AuthenticationError('Something went wrong');
+        },
         //deletevideogame
+        deleteGame: async (parent, {gameId}, context) => {
+            if (context.user) {
+                const updatedUser = await User.findOneAndUpdate(
+                    {_id: context.user._id},
+                    {$pull: {savedGames: {gameId}}},
+                    {new: true}
+                );
+                return updatedUser;
+            }
+            throw new AuthenticationError('Something went wrong');
+        }
     }
 }
 
