@@ -11,24 +11,24 @@ export const ALL_USERS = gql`
     `
 
 export const USER = gql`
-query User($username: String) {
-    user(username: $username) {
-      _id
-      username
-      email
-      savedGames {
-        gameId
-        name
-        description
-        metacritic
-        released
-        background_image
-        website
-        rating
-        metacritic_url
-        esrb_rating
-        platforms
-      }
+    query USER ($_id: ID, $username: String, $email: String) {
+        user(username: $username, _id: $_id, email: $email) {
+            _id
+            username
+            email
+            savedGames {
+                gameId
+                name
+                description
+                metacritic
+                released
+                background_image
+                website
+                rating
+                metacritic_url
+                esrb_rating
+                platforms
+            }
+        }
     }
-  }
     `
