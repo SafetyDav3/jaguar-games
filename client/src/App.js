@@ -12,6 +12,17 @@ const httpLink = createHttpLink({
   uri: '/graphql',
 });
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: grey[500],
+    },
+    secondary: {
+      main: red[700],
+    },
+  },
+});
+
 const authLink = setContext((_, {headers}) => {
   const token = Auth.getToken()
   return {

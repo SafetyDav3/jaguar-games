@@ -1,8 +1,5 @@
-import { useNavigate } from "react-router-dom"
-import { useQuery } from "@apollo/client"
-import { USER } from "../utils/queries"
-import Auth from "../utils/auth"
-
+import logo from './logo.svg';
+import './App.css';
 import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle'
@@ -22,39 +19,20 @@ import TextField from '@material-ui/core/TextField'
 import { ThemeProvider, createTheme } from '@material-ui/core/styles'
 import { grey, red } from '@material-ui/core/colors'
 
-const Dashboard = () => {
-    const navigate = useNavigate()
-    const currentUser = Auth.loggedIn()
-    const {loading, error, data} = useQuery(USER, {
-        variables: {
-            _id: currentUser?.data?._id
-        }
-    })
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: grey[500],
+    },
+    secondary: {
+      main: red[700],
+    },
+  },
+});
 
-    const theme = createTheme({
-        palette: {
-          primary: {
-            main: grey[500],
-          },
-          secondary: {
-            main: red[700],
-          },
-        },
-      });
-
-    if (!currentUser) {
-        navigate('/login')
-    }
-    if (loading) return 'Loading...'
-    if (error) return `Error! ${error.message}`
-
-    const user = data?.user
-    if (!user) {
-        return 'No user found'
-    }
-    return (
-        <>
-        <ThemeProvider theme={theme}>
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
       <Container maxWidth="xl">
         <div className="App">
           <header className="App-header">
@@ -371,8 +349,7 @@ const Dashboard = () => {
         </div>
       </Container>
       </ThemeProvider>
-        </>
-    )
+  );
 }
 
-export default Dashboard
+export default App;
