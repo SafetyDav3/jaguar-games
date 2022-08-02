@@ -17,215 +17,198 @@ import CardMedia from '@mui/material/CardMedia'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import TextField from '@mui/material/TextField'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-import { grey, red } from '@mui/material/colors'
-
-
 
 const Dashboard = () => {
-    const navigate = useNavigate()
-    const currentUser = Auth.loggedIn()
-    const {loading, error, data} = useQuery(USER, {
-        variables: {
-            _id: currentUser?.data?._id
-        }
-    })
-
-    const theme = createTheme({
-        palette: {
-          primary: {
-            main: grey[500],
-          },
-          secondary: {
-            main: red[700],
-          },
-        },
-      });
-
-    if (!currentUser) {
-        navigate('/login')
+  const navigate = useNavigate()
+  const currentUser = Auth.loggedIn()
+  const { loading, error, data } = useQuery(USER, {
+    variables: {
+      _id: currentUser?.data?._id
     }
-    if (loading) return 'Loading...'
-    if (error) return `Error! ${error.message}`
+  })
 
-    const user = data?.user
-    if (!user) {
-        return 'No user found'
-    }
-    return (
-        <>
-          <ThemeProvider theme={theme}>
-      <Container maxWidth="xl">
-        <div className="App">
-          <header className="App-header">
-            <AppBar color="secondary">
-              <Toolbar>
-                <IconButton>
-                  <MenuIcon />
-                </IconButton>
-                <Typography variant="h6">
-                  Jaguar Games
-                </Typography>
-                <Button>
-                  Login
-                </Button>
-              </Toolbar>
-            </AppBar>
+  if (!currentUser) {
+    navigate('/login')
+  }
+  if (loading) return 'Loading...'
+  if (error) return `Error! ${error.message}`
 
-            <Card style={{margin: 20}}>
-              <CardMedia 
-                component="img"
-                alt="picture of jaguar games logo"
-                height="200"
-                image="./images/red-jaguar-games-logo.png"
-              />
-            </Card> 
+  const user = data?.user
+  if (!user) {
+    return 'No user found'
+  }
+  return (
+    <>
+        <Container maxWidth="xl">
+          <div className="App">
+            <header className="App-header">
+              <AppBar color="secondary">
+                <Toolbar>
+                  <IconButton>
+                    <MenuIcon />
+                  </IconButton>
+                  <Typography variant="h6">
+                    Jaguar Games
+                  </Typography>
+                  <Button>
+                    Login
+                  </Button>
+                </Toolbar>
+              </AppBar>
 
-            <TextField variant="outlined" label="Game Name" helperText="Search for a game" />
+              <Card style={{ margin: 20 }}>
+                <CardMedia
+                  component="img"
+                  alt="picture of jaguar games logo"
+                  height="200"
+                  image="./images/red-jaguar-games-logo.png"
+                />
+              </Card>
 
-            <Button
-              variant="contained" 
-              size="small" 
-              href="#" 
-              onClick={()=>alert('hello')}
+              <TextField variant="outlined" label="Game Name" helperText="Search for a game" />
+
+              <Button
+                variant="contained"
+                size="small"
+                href="#"
+                onClick={() => alert('hello')}
               >Search</Button>
 
-            <Typography variant="h5" style={{color: 'black'}}>
-              Current Top 10 Games
-            </Typography>
+              <Typography variant="h5" style={{ color: 'black' }}>
+                Current Top 10 Games
+              </Typography>
 
-            <Grid container spacing={5} justify="center" alignItems="stretch">
-              <Grid item xs={10} sm={5} md={5} xl={3}>
-                <Card style={{height:'100%', width:'100%', border: "0.5px solid black"}}>
-                  <CardMedia 
-                    component="img"
-                    alt="picture of video game"
-                    style={{objectFit: 'cover' }}
-                    image="./images/halo.png"
-                  />
-                  <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Halo
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Release Date: 2001
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Rating: 4/5
-                  </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      style={{marginLeft: 45}}
-                      startIcon={<SaveIcon />} 
-                      variant="contained" 
-                      size="small" 
-                      href="#" 
-                      onClick={()=>alert('hello')}
+              <Grid container spacing={5} justify="center" alignItems="stretch">
+                <Grid item xs={10} sm={5} md={5} xl={3}>
+                  <Card style={{ height: '100%', width: '100%', border: "0.5px solid black" }}>
+                    <CardMedia
+                      component="img"
+                      alt="picture of video game"
+                      style={{ objectFit: 'cover' }}
+                      image="./images/halo.png"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        Halo
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Release Date: 2001
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Rating: 4/5
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        style={{ marginLeft: 45 }}
+                        startIcon={<SaveIcon />}
+                        variant="contained"
+                        size="small"
+                        href="#"
+                        onClick={() => alert('hello')}
                       >Save to My Library</Button>
-                  </CardActions>
-                </Card> 
-              </Grid>
-              <Grid item xs={10} sm={5} md={5} xl={3}>
-                <Card style={{height:'100%', width:'100%', border: "0.5px solid black"}}>
-                  <CardMedia 
-                    component="img"
-                    alt="picture of video game"
-                    style={{objectFit: 'cover' }}
-                    image="./images/halo.png"
-                  />
-                  <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Halo
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Release Date: 2001
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Rating: 4/5
-                  </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      style={{marginLeft: 45}}
-                      startIcon={<SaveIcon />} 
-                      variant="contained" 
-                      size="small" 
-                      href="#" 
-                      onClick={()=>alert('hello')}
+                    </CardActions>
+                  </Card>
+                </Grid>
+                <Grid item xs={10} sm={5} md={5} xl={3}>
+                  <Card style={{ height: '100%', width: '100%', border: "0.5px solid black" }}>
+                    <CardMedia
+                      component="img"
+                      alt="picture of video game"
+                      style={{ objectFit: 'cover' }}
+                      image="./images/halo.png"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        Halo
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Release Date: 2001
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Rating: 4/5
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        style={{ marginLeft: 45 }}
+                        startIcon={<SaveIcon />}
+                        variant="contained"
+                        size="small"
+                        href="#"
+                        onClick={() => alert('hello')}
                       >Save to My Library</Button>
-                  </CardActions>
-                </Card> 
-              </Grid>
-              <Grid item xs={10} sm={5} md={5} xl={3}>
-                <Card style={{height:'100%', width:'100%', border: "0.5px solid black"}}>
-                  <CardMedia 
-                    component="img"
-                    alt="picture of video game"
-                    style={{objectFit: 'cover' }}
-                    image="./images/halo.png"
-                  />
-                  <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Halo
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Release Date: 2001
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Rating: 4/5
-                  </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      style={{marginLeft: 45}}
-                      startIcon={<SaveIcon />} 
-                      variant="contained" 
-                      size="small" 
-                      href="#" 
-                      onClick={()=>alert('hello')}
+                    </CardActions>
+                  </Card>
+                </Grid>
+                <Grid item xs={10} sm={5} md={5} xl={3}>
+                  <Card style={{ height: '100%', width: '100%', border: "0.5px solid black" }}>
+                    <CardMedia
+                      component="img"
+                      alt="picture of video game"
+                      style={{ objectFit: 'cover' }}
+                      image="./images/halo.png"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        Halo
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Release Date: 2001
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Rating: 4/5
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        style={{ marginLeft: 45 }}
+                        startIcon={<SaveIcon />}
+                        variant="contained"
+                        size="small"
+                        href="#"
+                        onClick={() => alert('hello')}
                       >Save to My Library</Button>
-                  </CardActions>
-                </Card> 
-              </Grid>
-              <Grid item xs={10} sm={5} md={5} xl={4}>
-                <Card style={{height:'100%', width:'100%', border: "0.5px solid black"}}>
-                  <CardMedia 
-                    component="img"
-                    alt="picture of video game"
-                    style={{objectFit: 'cover' }}
-                    image="./images/halo.png"
-                  />
-                  <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Halo
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Release Date: 2001
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Rating: 4/5
-                  </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      style={{marginLeft: 45}}
-                      startIcon={<SaveIcon />} 
-                      variant="contained" 
-                      size="small" 
-                      href="#" 
-                      onClick={()=>alert('hello')}
+                    </CardActions>
+                  </Card>
+                </Grid>
+                <Grid item xs={10} sm={5} md={5} xl={4}>
+                  <Card style={{ height: '100%', width: '100%', border: "0.5px solid black" }}>
+                    <CardMedia
+                      component="img"
+                      alt="picture of video game"
+                      style={{ objectFit: 'cover' }}
+                      image="./images/halo.png"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        Halo
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Release Date: 2001
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Rating: 4/5
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        style={{ marginLeft: 45 }}
+                        startIcon={<SaveIcon />}
+                        variant="contained"
+                        size="small"
+                        href="#"
+                        onClick={() => alert('hello')}
                       >Save to My Library</Button>
-                  </CardActions>
-                </Card> 
+                    </CardActions>
+                  </Card>
+                </Grid>
               </Grid>
-            </Grid>
-          </header>
-        </div>
-      </Container>
-      </ThemeProvider>  
-        </>
-    )
+            </header>
+          </div>
+        </Container>
+    </>
+  )
 }
 
 export default Dashboard

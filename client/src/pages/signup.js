@@ -13,90 +13,76 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import TextField from '@mui/material/TextField'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-import { grey, red } from '@mui/material/colors'
+
 
 
 
 const Dashboard = () => {
-    const navigate = useNavigate()
-    const currentUser = Auth.loggedIn()
-    const {loading, error, data} = useQuery(USER, {
-        variables: {
-            _id: currentUser?.data?._id
-        }
-    })
-
-    const theme = createTheme({
-        palette: {
-          primary: {
-            main: grey[500],
-          },
-          secondary: {
-            main: red[700],
-          },
-        },
-      });
-
-    if (!currentUser) {
-        navigate('/login')
+  const navigate = useNavigate()
+  const currentUser = Auth.loggedIn()
+  const { loading, error, data } = useQuery(USER, {
+    variables: {
+      _id: currentUser?.data?._id
     }
-    if (loading) return 'Loading...'
-    if (error) return `Error! ${error.message}`
+  })
 
-    const user = data?.user
-    if (!user) {
-        return 'No user found'
-    }
-    return (
-        <>
-          <ThemeProvider theme={theme}>
-            <Container maxWidth="xl">
-              <div className="App">
-                <header className="App-header">
-                  <AppBar color="secondary">
-                    <Toolbar>
-                      <IconButton>
-                        <MenuIcon />
-                      </IconButton>
-                      <Typography variant="h6">
-                        Jaguar Games
-                      </Typography>
-                      <Button>
-                        Login
-                      </Button>
-                    </Toolbar>
-                  </AppBar>
+  if (!currentUser) {
+    navigate('/login')
+  }
+  if (loading) return 'Loading...'
+  if (error) return `Error! ${error.message}`
 
-                  <Card style={{margin: 20}}>
-                    <CardMedia 
-                      component="img"
-                      alt="picture of jaguar games logo"
-                      height="200"
-                      image="./images/red-jaguar-games-logo.png"
-                    />
-                  </Card> 
+  const user = data?.user
+  if (!user) {
+    return 'No user found'
+  }
+  return (
+    <>
+      <Container maxWidth="xl">
+        <div className="App">
+          <header className="App-header">
+            <AppBar color="secondary">
+              <Toolbar>
+                <IconButton>
+                  <MenuIcon />
+                </IconButton>
+                <Typography variant="h6">
+                  Jaguar Games
+                </Typography>
+                <Button>
+                  Login
+                </Button>
+              </Toolbar>
+            </AppBar>
 
-                  <TextField variant="outlined" type="email" label="Email" helperText="Please enter your email" />
-                  <TextField variant="outlined" type="email" label="Confirm Email" helperText="Please re-enter your email" />
-                  <TextField variant="outlined" label="Password" helperText="Please enter your password" />
-                  <TextField variant="outlined" label="Confirm Password" helperText="Please re-enter your Password" />
+            <Card style={{ margin: 20 }}>
+              <CardMedia
+                component="img"
+                alt="picture of jaguar games logo"
+                height="200"
+                image="./images/red-jaguar-games-logo.png"
+              />
+            </Card>
 
-                  <Button
-                    variant="contained" 
-                    size="small" 
-                    href="#" 
-                    onClick={()=>alert('hello')}
-                    >
-                      Submit
-                  </Button>
+            <TextField variant="outlined" type="email" label="Email" helperText="Please enter your email" />
+            <TextField variant="outlined" type="email" label="Confirm Email" helperText="Please re-enter your email" />
+            <TextField variant="outlined" label="Password" helperText="Please enter your password" />
+            <TextField variant="outlined" label="Confirm Password" helperText="Please re-enter your Password" />
 
-                </header>
-              </div>
-            </Container>
-          </ThemeProvider>  
-        </>
-    )
+            <Button
+              variant="contained"
+              size="small"
+              href="#"
+              onClick={() => alert('hello')}
+            >
+              Submit
+            </Button>
+
+          </header>
+        </div>
+      </Container>
+    </>
+  )
 }
 
 export default Dashboard

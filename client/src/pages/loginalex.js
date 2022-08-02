@@ -13,44 +13,32 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import TextField from '@mui/material/TextField'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-import { grey, red } from '@mui/material/colors'
 
 
 
 const Dashboard = () => {
-    const navigate = useNavigate()
-    const currentUser = Auth.loggedIn()
-    const {loading, error, data} = useQuery(USER, {
-        variables: {
-            _id: currentUser?.data?._id
-        }
-    })
-
-    const theme = createTheme({
-        palette: {
-          primary: {
-            main: grey[500],
-          },
-          secondary: {
-            main: red[700],
-          },
-        },
-      });
-
-    if (!currentUser) {
-        navigate('/login')
+  const navigate = useNavigate()
+  const currentUser = Auth.loggedIn()
+  const { loading, error, data } = useQuery(USER, {
+    variables: {
+      _id: currentUser?.data?._id
     }
-    if (loading) return 'Loading...'
-    if (error) return `Error! ${error.message}`
+  })
 
-    const user = data?.user
-    if (!user) {
-        return 'No user found'
-    }
-    return (
-        <>
-          <ThemeProvider theme={theme}>
+
+
+  if (!currentUser) {
+    navigate('/login')
+  }
+  if (loading) return 'Loading...'
+  if (error) return `Error! ${error.message}`
+
+  const user = data?.user
+  if (!user) {
+    return 'No user found'
+  }
+  return (
+    <>
       <Container maxWidth="xl">
         <div className="App">
           <header className="App-header">
@@ -68,32 +56,31 @@ const Dashboard = () => {
               </Toolbar>
             </AppBar>
 
-            <Card style={{margin: 20}}>
-              <CardMedia 
+            <Card style={{ margin: 20 }}>
+              <CardMedia
                 component="img"
                 alt="picture of jaguar games logo"
                 height="200"
                 image="./images/red-jaguar-games-logo.png"
               />
-            </Card> 
+            </Card>
 
             <TextField variant="outlined" type="email" label="Email" helperText="Please enter your email" />
             <TextField variant="outlined" label="Password" helperText="Please enter your password" />
 
             <Button
-              variant="contained" 
-              size="small" 
-              href="#" 
-              onClick={()=>alert('hello')}
-               >
-                 Login
-            </Button>      
+              variant="contained"
+              size="small"
+              href="#"
+              onClick={() => alert('hello')}
+            >
+              Login
+            </Button>
           </header>
         </div>
       </Container>
-      </ThemeProvider>  
-        </>
-    )
+    </>
+  )
 }
 
 export default Dashboard

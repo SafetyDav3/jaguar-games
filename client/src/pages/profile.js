@@ -17,9 +17,6 @@ import CardMedia from '@mui/material/CardMedia'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import TextField from '@mui/material/TextField'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-import { grey, red } from '@mui/material/colors'
-
 
 
 const Dashboard = () => {
@@ -30,17 +27,6 @@ const Dashboard = () => {
             _id: currentUser?.data?._id
         }
     })
-
-    const theme = createTheme({
-        palette: {
-          primary: {
-            main: grey[500],
-          },
-          secondary: {
-            main: red[700],
-          },
-        },
-      });
 
     if (!currentUser) {
         navigate('/login')
@@ -54,7 +40,6 @@ const Dashboard = () => {
     }
     return (
         <>
-          <ThemeProvider theme={theme}>
             <Container maxWidth="xl">
               <div className="App">
                 <header className="App-header">
@@ -236,8 +221,7 @@ const Dashboard = () => {
                   </Grid>
                 </header>
               </div>
-            </Container>
-      </ThemeProvider>  
+            </Container> 
         </>
     )
 }
