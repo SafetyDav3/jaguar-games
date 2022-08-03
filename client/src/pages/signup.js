@@ -60,7 +60,7 @@ const Dashboard = () => {
                 component="img"
                 alt="picture of jaguar games logo"
                 height="200"
-                image="./images/red-jaguar-games-logo.png"
+                image="./images/red-jaguar-games.png"
               />
             </Card>
 
