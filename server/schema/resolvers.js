@@ -4,9 +4,9 @@ const {AuthenticationError} = require('apollo-server-express')
 
 const resolvers = {
     Query: {
-        users: async (parent, args, context, info) => {
-            return await User.find()
-        },
+        // users: async (parent, args, context, info) => {
+        //     return await User.find()
+        // },
         user: async (parent, args, context, info) => {
             
             if (!args._id && !args.email && !args.username) {
@@ -23,6 +23,8 @@ const resolvers = {
                 where.username = args.username
             }
             return await User.findOne(where)
+                .select('-__v -password')
+                .populate('savedGames')
         }
     },
     Mutation: {
@@ -54,6 +56,30 @@ const resolvers = {
         },
         deleteUser: async (parent, args, context, info) => {
             return await User.findByIdAndDelete(args._id)
+        },
+        //add videogame
+        saveGame: async (parent, {gameId,name, description, metacritic, released, background_image, website, rating, metacritic_url, esrb_rating, platforms}, context) => {
+            if (context.user) {
+                const updatedUser = await User.findOneAndUpdate(
+                    {_id: context.user._id},
+                    {$addToSet: { savedGames: {gameId,name, description, metacritic, released, background_image, website, rating, metacritic_url, esrb_rating, platforms}}},
+                    {new: true}
+                )
+                return updatedUser;
+            }
+            throw new AuthenticationError('Something went wrong');
+        },
+        //deletevideogame
+        deleteGame: async (parent, {gameId}, context) => {
+            if (context.user) {
+                const updatedUser = await User.findOneAndUpdate(
+                    {_id: context.user._id},
+                    {$pull: {savedGames: {gameId}}},
+                    {new: true}
+                );
+                return updatedUser;
+            }
+            throw new AuthenticationError('Something went wrong');
         }
     }
 }

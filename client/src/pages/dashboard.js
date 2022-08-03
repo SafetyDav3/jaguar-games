@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
-import { useQuery } from "@apollo/client"
+import { useQuery, useMutation } from "@apollo/client"
 import { USER } from "../utils/queries"
+import { DELETE_GAME } from "../utils/mutations"
 import Auth from "../utils/auth"
 
 import Button from '@mui/material/Button'
@@ -162,7 +163,7 @@ const Dashboard = () => {
                   component="img"
                   alt="picture of jaguar games logo"
                   height="200"
-                  image="./images/red-jaguar-games-logo.png"
+                  image="./images/red-jaguar-games.png"
                 />
               </Card>
 
