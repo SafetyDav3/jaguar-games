@@ -84,6 +84,17 @@ const Login = () => {
     setAnchorEl(null);
   };
 
+  const handleSubmit = async e => {
+    e.preventDefault()
+    const {data} = await login({
+        variables: {
+            username,
+            password
+        }
+    })
+    Auth.login(data.login.token)
+}
+
 
   return (
     <>
@@ -150,19 +161,19 @@ const Login = () => {
                 image="./images/red-jaguar-games.png"
               />
             </Card>
-
-            <TextField variant="outlined" type="email" label="Email" helperText="Please enter your email" />
-            <TextField variant="outlined" type="password" label="Password" helperText="Please enter your password" />
+            <form onSubmit={handleSubmit}>
+            <TextField required variant="outlined" type="text" label="Username" helperText="Please enter your username" onChange={e => setUsername(e.target.value)}/>
+            <TextField required variant="outlined" type="password" label="Password" helperText="Please enter your password" onChange={e => setPassword(e.target.value)}/>
 
             <Button
               style={{ marginBottom: 300, marginTop: 20 }}
               variant="contained"
               size="small"
-              href="#"
-              onClick={() => alert('hello')}
+              type="submit"
             >
               Login
             </Button>
+            </form>
           </header>
         </div>
       </Container>
