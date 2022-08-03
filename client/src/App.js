@@ -56,7 +56,6 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/singlegame" element={<SingleGame />} />
-            <Route path="/test" element={<Board />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
