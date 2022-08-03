@@ -8,6 +8,7 @@ import Dashboard from "./pages/dashboard";
 import Profile from "./pages/profile";
 import LoginAlex from "./pages/loginalex";
 import Signup from "./pages/signup";
+import SingleGame from "./pages/singlegame";
 
 import Auth from "./utils/auth";
 
@@ -55,6 +56,7 @@ function App() {
             <Route path="/loginalex" element={<LoginAlex />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/singlegame" element={<SingleGame />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

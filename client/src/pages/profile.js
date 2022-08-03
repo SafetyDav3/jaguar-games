@@ -16,214 +16,303 @@ import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
-import TextField from '@mui/material/TextField'
 
+import { styled, alpha } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
+
+import React, {useState} from 'react';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 const Dashboard = () => {
-    const navigate = useNavigate()
-    const currentUser = Auth.loggedIn()
-    const {loading, error, data} = useQuery(USER, {
-        variables: {
-            _id: currentUser?.data?._id
-        }
-    })
-
-    if (!currentUser) {
-        navigate('/login')
+  const navigate = useNavigate()
+  const currentUser = Auth.loggedIn()
+  const { loading, error, data } = useQuery(USER, {
+    variables: {
+      _id: currentUser?.data?._id
     }
-    if (loading) return 'Loading...'
-    if (error) return `Error! ${error.message}`
+  })
 
-    const user = data?.user
-    if (!user) {
-        return 'No user found'
-    }
-    return (
-        <>
-            <Container maxWidth="xl">
-              <div className="App">
-                <header className="App-header">
-                  <AppBar color="secondary">
-                    <Toolbar>
-                      <IconButton>
-                        <MenuIcon />
-                      </IconButton>
-                      <Typography variant="h6">
-                        Jaguar Games
-                      </Typography>
-                      <Button>
-                        Login
-                      </Button>
-                    </Toolbar>
-                  </AppBar>
+  const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
+    },
+  }));
 
-                  <Card style={{margin: 20}}>
-                    <CardMedia 
-                      component="img"
-                      alt="picture of jaguar games logo"
-                      height="200"
-                      image="./images/red-jaguar-games.png"
-                    />
-                  </Card> 
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
 
-                  <TextField variant="outlined" label="Game Name" helperText="Search for a game" />
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        width: '12ch',
+        '&:focus': {
+          width: '20ch',
+        },
+      },
+    },
+  }));
+  
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-                  <Button
-                    variant="contained" 
-                    size="small" 
-                    href="#" 
-                    onClick={()=>alert('hello')}
+  if (!currentUser) {
+    navigate('/login')
+  }
+  if (loading) return 'Loading...'
+  if (error) return `Error! ${error.message}`
+
+  const user = data?.user
+  if (!user) {
+    return 'No user found'
+  }
+
+
+  return (
+    <>
+      <Container maxWidth="xl">
+        <div className="App">
+          <header className="App-header">
+            <Box sx={{ flexGrow: 1 }}>
+              <AppBar color="secondary">
+                <Toolbar>
+                  <div>
+                  <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="open drawer"
+                    sx={{ mr: 2 }}
+                    id="basic-button"
+                      aria-controls={open ? 'basic-menu' : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? 'true' : undefined}
+                      onClick={handleClick}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                      }}
                     >
-                      Search
-                  </Button>
-
-                  <Typography variant="h5" style={{color: 'black'}}>
-                    My Games Library
+                      <MenuItem onClick={handleClose}>Dashboard</MenuItem>
+                      <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    </Menu>
+                  </div>
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="div"
+                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                  >
+                    Jaguar Games
                   </Typography>
+                  <Search>
+                    <SearchIconWrapper>
+                      <SearchIcon />
+                    </SearchIconWrapper>
+                    <StyledInputBase
+                      placeholder="Search Games..."
+                      inputProps={{ 'aria-label': 'search' }}
+                    />
+                  </Search>
+                </Toolbar>
+              </AppBar>
+            </Box>
 
-                  <Grid container spacing={5} justify="center" alignItems="stretch">
-                    <Grid item xs={10} sm={5} md={5} xl={3}>
-                      <Card style={{height:'100%', width:'100%', border: "0.5px solid black"}}>
-                        <CardMedia 
-                          component="img"
-                          alt="picture of video game"
-                          style={{objectFit: 'cover' }}
-                          image="./images/halo.png"
-                        />
-                        <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          Halo
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Release Date: 2001
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Rating: 4/5
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Lorem ipsum dolor sit amet. Ab perferendis dolore aut quisquam soluta ut numquam adipisci ea voluptas alias a nesciunt eligendi aut corrupti nesciunt rem quibusdam sint. Sit consequatur velit aut Quis doloribus qui distinctio itaque At fuga provident sed dignissimos autem est autem debitis ut nemo omnis. Qui sequi dolores qui tempora voluptas aut quia dolorem ab autem deleniti non consequuntur modi. Est odit optio est voluptatum enim ut quibusdam dolores nam quae quasi id corporis magni id eaque omnis et quia harum.
-                        </Typography>
-                        </CardContent>
-                        <CardActions>
-                          <Button
-                            style={{marginLeft: 45}}
-                            startIcon={<RemoveCircleIcon />} 
-                            variant="contained" 
-                            size="small" 
-                            href="#" 
-                            onClick={()=>alert('hello')}
-                            >Remove from Library</Button>
-                        </CardActions>
-                      </Card> 
-                    </Grid>
-                    <Grid item xs={10} sm={5} md={5} xl={3}>
-                      <Card style={{height:'100%', width:'100%', border: "0.5px solid black"}}>
-                        <CardMedia 
-                          component="img"
-                          alt="picture of video game"
-                          style={{objectFit: 'cover' }}
-                          image="./images/halo.png"
-                        />
-                        <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          Halo
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Release Date: 2001
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Rating: 4/5
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Lorem ipsum dolor sit amet. Ab perferendis dolore aut quisquam soluta ut numquam adipisci ea voluptas alias a nesciunt eligendi aut corrupti nesciunt rem quibusdam sint. Sit consequatur velit aut Quis doloribus qui distinctio itaque At fuga provident sed dignissimos autem est autem debitis ut nemo omnis. Qui sequi dolores qui tempora voluptas aut quia dolorem ab autem deleniti non consequuntur modi. Est odit optio est voluptatum enim ut quibusdam dolores nam quae quasi id corporis magni id eaque omnis et quia harum.
-                        </Typography>
-                        </CardContent>
-                        <CardActions>
-                          <Button
-                            style={{marginLeft: 45}}
-                            startIcon={<RemoveCircleIcon />} 
-                            variant="contained" 
-                            size="small" 
-                            href="#" 
-                            onClick={()=>alert('hello')}
-                            >Remove from Library</Button>
-                        </CardActions>
-                      </Card> 
-                    </Grid>
-                    <Grid item xs={10} sm={5} md={5} xl={3}>
-                      <Card style={{height:'100%', width:'100%', border: "0.5px solid black"}}>
-                        <CardMedia 
-                          component="img"
-                          alt="picture of video game"
-                          style={{objectFit: 'cover' }}
-                          image="./images/halo.png"
-                        />
-                        <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          Halo
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Release Date: 2001
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Rating: 4/5
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Lorem ipsum dolor sit amet. Ab perferendis dolore aut quisquam soluta ut numquam adipisci ea voluptas alias a nesciunt eligendi aut corrupti nesciunt rem quibusdam sint. Sit consequatur velit aut Quis doloribus qui distinctio itaque At fuga provident sed dignissimos autem est autem debitis ut nemo omnis. Qui sequi dolores qui tempora voluptas aut quia dolorem ab autem deleniti non consequuntur modi. Est odit optio est voluptatum enim ut quibusdam dolores nam quae quasi id corporis magni id eaque omnis et quia harum.
-                        </Typography>
-                        </CardContent>
-                        <CardActions>
-                          <Button
-                            style={{marginLeft: 45}}
-                            startIcon={<RemoveCircleIcon />} 
-                            variant="contained" 
-                            size="small" 
-                            href="#" 
-                            onClick={()=>alert('hello')}
-                            >Remove from Library</Button>
-                        </CardActions>
-                      </Card> 
-                    </Grid>
-                    <Grid item xs={10} sm={5} md={5} xl={3}>
-                      <Card style={{height:'100%', width:'100%', border: "0.5px solid black"}}>
-                        <CardMedia 
-                          component="img"
-                          alt="picture of video game"
-                          style={{objectFit: 'cover' }}
-                          image="./images/halo.png"
-                        />
-                        <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          Halo
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Release Date: 2001
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Rating: 4/5
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Lorem ipsum dolor sit amet. Ab perferendis dolore aut quisquam soluta ut numquam adipisci ea voluptas alias a nesciunt eligendi aut corrupti nesciunt rem quibusdam sint. Sit consequatur velit aut Quis doloribus qui distinctio itaque At fuga provident sed dignissimos autem est autem debitis ut nemo omnis. Qui sequi dolores qui tempora voluptas aut quia dolorem ab autem deleniti non consequuntur modi. Est odit optio est voluptatum enim ut quibusdam dolores nam quae quasi id corporis magni id eaque omnis et quia harum.
-                        </Typography>
-                        </CardContent>
-                        <CardActions>
-                          <Button
-                            style={{marginLeft: 45}}
-                            startIcon={<RemoveCircleIcon />} 
-                            variant="contained" 
-                            size="small" 
-                            href="#" 
-                            onClick={()=>alert('hello')}
-                            >Remove from Library</Button>
-                        </CardActions>
-                      </Card> 
-                    </Grid>
-                  </Grid>
-                </header>
-              </div>
-            </Container> 
-        </>
-    )
+            <Card style={{ margin: 20 }}>
+              <CardMedia
+                component="img"
+                alt="picture of jaguar games logo"
+                height="200"
+                image="./images/red-jaguar-games.png"
+              />
+            </Card>
+
+            <div style={{ margin: 20 }}>          
+              <Typography variant="h5" style={{ color: 'black'}}>
+                My Games Library
+              </Typography>
+            </div>
+
+            <Grid container spacing={5} justify="center" alignItems="stretch" style={{ padding: 20 }}>
+              <Grid item xs={12} sm={6} md={4} xl={3}>
+                <Card style={{ height: '100%', width: '100%', border: "0.5px solid black" }}>
+                  <CardMedia
+                    component="img"
+                    alt="picture of video game"
+                    style={{ objectFit: 'cover' }}
+                    image="./images/halo.png"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      Halo
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Release Date: 2001
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Rating: 4/5
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Lorem ipsum dolor sit amet. Ab perferendis dolore aut quisquam soluta ut numquam adipisci ea voluptas alias a nesciunt eligendi aut corrupti nesciunt rem quibusdam sint. Sit consequatur velit aut Quis doloribus qui distinctio itaque At fuga provident sed dignissimos autem est autem debitis ut nemo omnis. Qui sequi dolores qui tempora voluptas aut quia dolorem ab autem deleniti non consequuntur modi. Est odit optio est voluptatum enim ut quibusdam dolores nam quae quasi id corporis magni id eaque omnis et quia harum.
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      style={{ marginLeft: 45 }}
+                      startIcon={<RemoveCircleIcon />}
+                      variant="contained"
+                      size="small"
+                      href="#"
+                      onClick={() => alert('hello')}
+                    >Remove from Library</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} xl={3}>
+                <Card style={{ height: '100%', width: '100%', border: "0.5px solid black" }}>
+                  <CardMedia
+                    component="img"
+                    alt="picture of video game"
+                    style={{ objectFit: 'cover' }}
+                    image="./images/halo.png"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      Halo
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Release Date: 2001
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Rating: 4/5
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Lorem ipsum dolor sit amet. Ab perferendis dolore aut quisquam soluta ut numquam adipisci ea voluptas alias a nesciunt eligendi aut corrupti nesciunt rem quibusdam sint. Sit consequatur velit aut Quis doloribus qui distinctio itaque At fuga provident sed dignissimos autem est autem debitis ut nemo omnis. Qui sequi dolores qui tempora voluptas aut quia dolorem ab autem deleniti non consequuntur modi. Est odit optio est voluptatum enim ut quibusdam dolores nam quae quasi id corporis magni id eaque omnis et quia harum.
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      style={{ marginLeft: 45 }}
+                      startIcon={<RemoveCircleIcon />}
+                      variant="contained"
+                      size="small"
+                      href="#"
+                      onClick={() => alert('hello')}
+                    >Remove from Library</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} xl={3}>
+                <Card style={{ height: '100%', width: '100%', border: "0.5px solid black" }}>
+                  <CardMedia
+                    component="img"
+                    alt="picture of video game"
+                    style={{ objectFit: 'cover' }}
+                    image="./images/halo.png"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      Halo
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Release Date: 2001
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Rating: 4/5
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Lorem ipsum dolor sit amet. Ab perferendis dolore aut quisquam soluta ut numquam adipisci ea voluptas alias a nesciunt eligendi aut corrupti nesciunt rem quibusdam sint. Sit consequatur velit aut Quis doloribus qui distinctio itaque At fuga provident sed dignissimos autem est autem debitis ut nemo omnis. Qui sequi dolores qui tempora voluptas aut quia dolorem ab autem deleniti non consequuntur modi. Est odit optio est voluptatum enim ut quibusdam dolores nam quae quasi id corporis magni id eaque omnis et quia harum.
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      style={{ marginLeft: 45 }}
+                      startIcon={<RemoveCircleIcon />}
+                      variant="contained"
+                      size="small"
+                      href="#"
+                      onClick={() => alert('hello')}
+                    >Remove from Library</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} xl={3}>
+                <Card style={{ height: '100%', width: '100%', border: "0.5px solid black" }}>
+                  <CardMedia
+                    component="img"
+                    alt="picture of video game"
+                    style={{ objectFit: 'cover' }}
+                    image="./images/halo.png"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      Halo
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Release Date: 2001
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Rating: 4/5
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Lorem ipsum dolor sit amet. Ab perferendis dolore aut quisquam soluta ut numquam adipisci ea voluptas alias a nesciunt eligendi aut corrupti nesciunt rem quibusdam sint. Sit consequatur velit aut Quis doloribus qui distinctio itaque At fuga provident sed dignissimos autem est autem debitis ut nemo omnis. Qui sequi dolores qui tempora voluptas aut quia dolorem ab autem deleniti non consequuntur modi. Est odit optio est voluptatum enim ut quibusdam dolores nam quae quasi id corporis magni id eaque omnis et quia harum.
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      style={{ marginLeft: 45 }}
+                      startIcon={<RemoveCircleIcon />}
+                      variant="contained"
+                      size="small"
+                      href="#"
+                      onClick={() => alert('hello')}
+                    >Remove from Library</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            </Grid>
+          </header>
+        </div>
+      </Container>
+    </>
+  )
 }
 
 export default Dashboard
