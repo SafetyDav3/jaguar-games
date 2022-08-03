@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
-import { useQuery } from "@apollo/client"
+import { useQuery, useMutation } from "@apollo/client"
 import { USER } from "../utils/queries"
+import { LOGIN } from '../utils/mutations'
 import Auth from "../utils/auth"
 
 import Button from '@mui/material/Button'
@@ -23,14 +24,14 @@ import React, {useState} from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-const Dashboard = () => {
-  const navigate = useNavigate()
-  const currentUser = Auth.loggedIn()
-  const { loading, error, data } = useQuery(USER, {
-    variables: {
-      _id: currentUser?.data?._id
-    }
-  })
+const Login = () => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const [login] = useMutation(LOGIN)
+
+  
+
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -83,17 +84,6 @@ const Dashboard = () => {
     setAnchorEl(null);
   };
 
-  if (!currentUser) {
-    navigate('/login')
-  }
-  if (loading) return 'Loading...'
-  if (error) return `Error! ${error.message}`
-
-  const user = data?.user
-  if (!user) {
-    return 'No user found'
-  }
-
 
   return (
     <>
@@ -103,7 +93,7 @@ const Dashboard = () => {
             <Box sx={{ flexGrow: 1 }}>
               <AppBar color="secondary">
                 <Toolbar>
-                  <div>
+                  {/* <div>
                   <IconButton
                     size="large"
                     edge="start"
@@ -130,7 +120,7 @@ const Dashboard = () => {
                       <MenuItem onClick={handleClose}>Dashboard</MenuItem>
                       <MenuItem onClick={handleClose}>Create Account</MenuItem>
                     </Menu>
-                  </div>
+                  </div> */}
                   <Typography
                     variant="h6"
                     noWrap
@@ -180,4 +170,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default Login

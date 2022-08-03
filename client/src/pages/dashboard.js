@@ -28,7 +28,7 @@ const Dashboard = () => {
   const [gameList, setGameList] = useState([])
   const [searchTerm, setSearchTerm] = useState("");
   const [gameId , setGameId] = useState("");
-  // useEffect(() => {getTopTen()}, [])
+  useEffect(() => {getTopTen()}, [])
 
   const navigate = useNavigate();
   // const currentUser = Auth.loggedIn();
@@ -135,8 +135,8 @@ const Dashboard = () => {
                 </IconButton>
                 <Typography variant="h6">Jaguar Games</Typography>
                 {Auth.loggedIn() && (
-                  <Button onClick={Auth.logout}>Logout</Button>
-                ) || (<Button href="/login">Login</Button>)}
+                  <><Button onClick={Auth.logout}>Logout</Button><Button href="/profile"></Button></>
+                ) || (<><Button href="/login">Login</Button><Button href="/signup">Create Account</Button></>)}
               </Toolbar>
             </AppBar>
 
