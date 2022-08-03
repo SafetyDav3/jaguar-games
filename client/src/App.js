@@ -6,7 +6,6 @@ import './App.css';
 import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
 import Profile from "./pages/profile";
-import LoginAlex from "./pages/loginalex";
 import Signup from "./pages/signup";
 import SingleGame from "./pages/singlegame";
 
