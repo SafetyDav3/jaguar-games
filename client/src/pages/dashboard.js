@@ -1,8 +1,10 @@
-import { useNavigate } from "react-router-dom"
-import { useQuery, useMutation } from "@apollo/client"
-import { USER } from "../utils/queries"
-import { DELETE_GAME } from "../utils/mutations"
-import Auth from "../utils/auth"
+import { useNavigate } from "react-router-dom";
+import { useQuery, useMutation } from "@apollo/client";
+import { USER } from "../utils/queries";
+import { DELETE_GAME } from "../utils/mutations";
+import Auth from "../utils/auth";
+
+import { useState, useEffect } from "react";
 
 import Button from "@mui/material/Button";
 import SaveIcon from "@mui/icons-material/Save";
@@ -20,9 +22,10 @@ import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
 
 // API calls
-import { topTen } from "../utils/api";
+import { topTen, searchGame, getGame } from "../utils/api";
 
 const Dashboard = () => {
+  const [searchTerm, set] = useState("battlefield");
   const navigate = useNavigate();
   const currentUser = Auth.loggedIn();
   const { loading, error, data } = useQuery(USER, {
@@ -37,13 +40,14 @@ const Dashboard = () => {
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
 
+  // ↓↓↓ API Calls ↓↓↓
   // Return top ten games from RAWG API
   const getTopTen = async () => {
     try {
       const response = await topTen();
-      const  data  = await response.json();
+      const data = await response.json();
       // console.log(data);
-      const gameData = data.results.map(game => ({
+      const gameData = data.results.map((game) => ({
         id: game.id,
         name: game.name,
         background_image: game.background_image,
@@ -58,6 +62,52 @@ const Dashboard = () => {
   };
 
   // Return search results
+  const searchGame = async (searchTerm) => {
+    try {
+      const response = await searchGame(searchTerm);
+      const data = await response.json();
+      // console.log(data);
+      const gameData = data.results.map((game) => ({
+        id: game.id,
+        name: game.name,
+        background_image: game.background_image,
+        esrb_rating: game.esrb_rating.name,
+        rating: game.rating,
+        released: game.released,
+      }));
+      console.log(gameData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Return single game
+  const getGame = async (gameId) => {
+    try {
+      const response = await getGame(gameId);
+      const data = await response.json();
+      // console.log(data);
+      const gameData = {
+        id: data.id,
+        name: data.name,
+        description: data.description,
+        metacritic: data.metacritic,
+        metacritic_url: data.metacritic_url,
+        background_image: data.background_image,
+        website: data.website,
+        esrb_rating: data.esrb_rating.name,
+        rating: data.rating,
+        released: data.released,
+        platforms: data.platforms.map((platform) => platform.name),
+      };
+      console.log(gameData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+// ↑↑↑ API Calls End ↑↑↑
+
+
 
   const user = data?.user;
   if (!user) {
@@ -65,7 +115,6 @@ const Dashboard = () => {
   }
   return (
     <>
-    
       <Container maxWidth="xl">
         <div className="App">
           <header className="App-header">
@@ -77,6 +126,8 @@ const Dashboard = () => {
                 <Typography variant="h6">Jaguar Games</Typography>
                 <Button>Login</Button>
                 <Button onClick={getTopTen}>test</Button>
+                <Button onClick={getGame}>test</Button>
+                <Button onClick={searchGame} searchTerm={searchTerm}>test</Button>
               </Toolbar>
             </AppBar>
 
