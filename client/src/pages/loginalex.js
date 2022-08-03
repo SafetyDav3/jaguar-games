@@ -162,7 +162,7 @@ const Dashboard = () => {
             </Card>
 
             <TextField variant="outlined" type="email" label="Email" helperText="Please enter your email" />
-            <TextField variant="outlined" label="Password" helperText="Please enter your password" />
+            <TextField variant="outlined" type="password" label="Password" helperText="Please enter your password" />
 
             <Button
               style={{ marginBottom: 300, marginTop: 20 }}
