@@ -28,20 +28,18 @@ const Dashboard = () => {
   const [gameList, setGameList] = useState([])
   const [searchTerm, setSearchTerm] = useState("");
   const [gameId , setGameId] = useState("");
+  // useEffect(() => {getTopTen()}, [])
 
   const navigate = useNavigate();
-  const currentUser = Auth.loggedIn();
-  const { loading, error, data } = useQuery(USER, {
-    variables: {
-      _id: currentUser?.data?._id,
-    },
-  });
+  // const currentUser = Auth.loggedIn();
+  // const { loading, error, data } = useQuery(USER, {
+  //   variables: {
+  //     _id: currentUser?.data?._id,
+  //   },
+  // });
 
-  if (!currentUser) {
-    navigate("/login");
-  }
-  if (loading) return "Loading...";
-  if (error) return `Error! ${error.message}`;
+  // if (loading) return "Loading...";
+  // if (error) return `Error! ${error.message}`;
 
   // ↓↓↓ API Calls ↓↓↓
   // Return top ten games from RAWG API
@@ -59,6 +57,7 @@ const Dashboard = () => {
         released: game.released,
       }));
       console.log(gameData);
+      setGameList(gameData)
     } catch (error) {
       console.log(error);
     }
@@ -84,7 +83,6 @@ const Dashboard = () => {
         rating: game.rating,
         released: game.released,
       }));
-      console.log(gameData);
       setGameList(gameData)
       setSearchTerm('')
 
@@ -121,10 +119,10 @@ const Dashboard = () => {
 
 
 
-  const user = data?.user;
-  if (!user) {
-    return "No user found";
-  }
+  // const user = data?.user;
+  // if (!user) {
+  //   return "No user found";
+  // }
   return (
     <>
       <Container maxWidth="xl">
@@ -136,10 +134,9 @@ const Dashboard = () => {
                   <MenuIcon />
                 </IconButton>
                 <Typography variant="h6">Jaguar Games</Typography>
-                <Button>Login</Button>
-                <Button onClick={getTopTen}>test</Button>
-                <Button onClick={getSingleGame}>test</Button>
-                <Button onClick={searchGames}>test</Button>
+                {Auth.loggedIn() && (
+                  <Button onClick={Auth.logout}>Logout</Button>
+                ) || (<Button href="/login">Login</Button>)}
               </Toolbar>
             </AppBar>
 
@@ -177,6 +174,7 @@ const Dashboard = () => {
                 return (
               <Grid item xs={10} sm={5} md={5} xl={3}>
                 <Card
+                  key={game.id}
                   style={{
                     height: "100%",
                     width: "100%",
@@ -201,16 +199,17 @@ const Dashboard = () => {
                     </Typography>
                   </CardContent>
                   <CardActions>
+                    {Auth.loggedIn() && (
                     <Button
                       style={{ marginLeft: 45 }}
                       startIcon={<SaveIcon />}
                       variant="contained"
                       size="small"
-                      href="#"
                       onClick={() => alert("hello")}
                     >
                       Save to My Library
                     </Button>
+                    )}
                   </CardActions>
                 </Card>
               </Grid>
