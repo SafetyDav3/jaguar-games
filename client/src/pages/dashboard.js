@@ -25,7 +25,9 @@ import TextField from "@mui/material/TextField";
 import { topTen, searchGame, getGame } from "../utils/api";
 
 const Dashboard = () => {
-  const [searchTerm, set] = useState("battlefield");
+  const [searchTerm, setSearchTerm] = useState("battlefield");
+  const [gameId , setGameId] = useState("3498");
+
   const navigate = useNavigate();
   const currentUser = Auth.loggedIn();
   const { loading, error, data } = useQuery(USER, {
@@ -62,7 +64,7 @@ const Dashboard = () => {
   };
 
   // Return search results
-  const searchGame = async (searchTerm) => {
+  const searchSingleGame = async () => {
     try {
       const response = await searchGame(searchTerm);
       const data = await response.json();
@@ -71,7 +73,7 @@ const Dashboard = () => {
         id: game.id,
         name: game.name,
         background_image: game.background_image,
-        esrb_rating: game.esrb_rating.name,
+        esrb_rating: game.esrb_rating?.name,
         rating: game.rating,
         released: game.released,
       }));
@@ -82,11 +84,11 @@ const Dashboard = () => {
   };
 
   // Return single game
-  const getGame = async (gameId) => {
+  const getSingleGame = async () => {
     try {
       const response = await getGame(gameId);
       const data = await response.json();
-      // console.log(data);
+      console.log(data);
       const gameData = {
         id: data.id,
         name: data.name,
@@ -95,10 +97,10 @@ const Dashboard = () => {
         metacritic_url: data.metacritic_url,
         background_image: data.background_image,
         website: data.website,
-        esrb_rating: data.esrb_rating.name,
+        esrb_rating: data.esrb_rating?.name,
         rating: data.rating,
         released: data.released,
-        platforms: data.platforms.map((platform) => platform.name),
+        platforms: data.platforms?.map((platform) => platform.platform.name),
       };
       console.log(gameData);
     } catch (error) {
@@ -126,8 +128,8 @@ const Dashboard = () => {
                 <Typography variant="h6">Jaguar Games</Typography>
                 <Button>Login</Button>
                 <Button onClick={getTopTen}>test</Button>
-                <Button onClick={getGame}>test</Button>
-                <Button onClick={searchGame} searchTerm={searchTerm}>test</Button>
+                <Button onClick={getSingleGame}>test</Button>
+                <Button onClick={searchSingleGame}>test</Button>
               </Toolbar>
             </AppBar>
 
