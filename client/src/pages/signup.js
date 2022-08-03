@@ -163,8 +163,8 @@ const Dashboard = () => {
 
             <TextField variant="outlined" type="email" label="Email" helperText="Please enter your email" />
             <TextField variant="outlined" type="email" label="Confirm Email" helperText="Please re-enter your email" />
-            <TextField variant="outlined" label="Password" helperText="Please enter your password" />
-            <TextField variant="outlined" label="Confirm Password" helperText="Please re-enter your Password" />
+            <TextField variant="outlined" type="password" label="Password" helperText="Please enter your password" />
+            <TextField variant="outlined" type="password" label="Confirm Password" helperText="Please re-enter your Password" />
 
             <Button
               style={{ marginBottom: 200, marginTop: 20 }}
@@ -173,7 +173,7 @@ const Dashboard = () => {
               href="#"
               onClick={() => alert('hello')}
             >
-              Submit
+              Create Account
             </Button>
 
           </header>
