@@ -4,7 +4,9 @@ import { USER } from "../utils/queries"
 import Auth from "../utils/auth"
 
 import Button from '@mui/material/Button'
+import SaveIcon from '@mui/icons-material/Save'
 import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -12,7 +14,8 @@ import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
-import TextField from '@mui/material/TextField'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
 
 import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -128,7 +131,7 @@ const Dashboard = () => {
                       }}
                     >
                       <MenuItem onClick={handleClose}>Dashboard</MenuItem>
-                      <MenuItem onClick={handleClose}>Login</MenuItem>
+                      <MenuItem onClick={handleClose}>Logout</MenuItem>
                     </Menu>
                   </div>
                   <Typography
@@ -161,21 +164,42 @@ const Dashboard = () => {
               />
             </Card>
 
-            <TextField variant="outlined" type="email" label="Email" helperText="Please enter your email" />
-            <TextField variant="outlined" type="email" label="Confirm Email" helperText="Please re-enter your email" />
-            <TextField variant="outlined" label="Password" helperText="Please enter your password" />
-            <TextField variant="outlined" label="Confirm Password" helperText="Please re-enter your Password" />
-
-            <Button
-              style={{ marginBottom: 200, marginTop: 20 }}
-              variant="contained"
-              size="small"
-              href="#"
-              onClick={() => alert('hello')}
-            >
-              Submit
-            </Button>
-
+            <Grid container spacing={5} justify="center" alignItems="stretch" style={{ padding: 20 }}>
+              <Grid item xs={12} sm={12} md={12} xl={12}>
+                <Card style={{ height: '100%', width: '100%', border: "0.5px solid black" }}>
+                  <CardMedia
+                    component="img"
+                    alt="picture of video game"
+                    style={{ objectFit: 'cover' }}
+                    image="./images/halo.png"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      Halo
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Release Date: 2001
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Rating: 4/5
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Lorem ipsum dolor sit amet. Ab perferendis dolore aut quisquam soluta ut numquam adipisci ea voluptas alias a nesciunt eligendi aut corrupti nesciunt rem quibusdam sint. Sit consequatur velit aut Quis doloribus qui distinctio itaque At fuga provident sed dignissimos autem est autem debitis ut nemo omnis. Qui sequi dolores qui tempora voluptas aut quia dolorem ab autem deleniti non consequuntur modi. Est odit optio est voluptatum enim ut quibusdam dolores nam quae quasi id corporis magni id eaque omnis et quia harum.
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                  <Button
+                        style={{ marginLeft: 55 }}
+                        startIcon={<SaveIcon />}
+                        variant="contained"
+                        size="small"
+                        href="#"
+                        onClick={() => alert('hello')}
+                      >Save to My Library</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            </Grid>
           </header>
         </div>
       </Container>
