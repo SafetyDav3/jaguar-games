@@ -1,7 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import { useQuery } from "@apollo/client";
-import { USER } from "../utils/queries";
-import Auth from "../utils/auth";
+import { useNavigate } from "react-router-dom"
+import { useQuery, useMutation } from "@apollo/client"
+import { USER } from "../utils/queries"
+import { DELETE_GAME } from "../utils/mutations"
+import Auth from "../utils/auth"
 
 import Button from "@mui/material/Button";
 import SaveIcon from "@mui/icons-material/Save";

@@ -16,6 +16,19 @@ export const USER = gql`
             _id
             username
             email
+            savedGames {
+                gameId
+                name
+                description
+                metacritic
+                released
+                background_image
+                website
+                rating
+                metacritic_url
+                esrb_rating
+                platforms
+            }
         }
     }
     `

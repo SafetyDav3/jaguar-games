@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose')
 const bcrypt = require('bcrypt')
+const gameSchema = require('./videoGame')
 
 const userSchema = new Schema({
     username: {
@@ -19,7 +20,8 @@ const userSchema = new Schema({
         type: String,
         required: true,
         minlength: 6,
-    }
+    },
+    savedGames: [gameSchema]
 }, {
     timestamps: true,
 })
