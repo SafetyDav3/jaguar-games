@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client"
 import { USER } from "../utils/queries"
 import Auth from "../utils/auth"
 
-const Dashboard = () => {
+const Board = () => {
     const navigate = useNavigate()
     const currentUser = Auth.loggedIn()
     const {loading, error, data} = useQuery(USER, {
@@ -25,9 +25,10 @@ const Dashboard = () => {
         <div>
             <h1>Welcome, {user.username}</h1>
             <p>{user.email}</p>
+            <p>{user.savedGames}</p>
             <button onClick={Auth.logout}>Logout</button>
         </div>
     )
 }
 
-export default Dashboard
+export default Board
