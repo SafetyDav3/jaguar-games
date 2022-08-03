@@ -130,7 +130,9 @@ const Dashboard = () => {
                         'aria-labelledby': 'basic-button',
                       }}
                     >
+                      <MenuItem onClick={handleClose}>Login</MenuItem>
                       <MenuItem onClick={handleClose}>Dashboard</MenuItem>
+                      <MenuItem onClick={handleClose}>Create Account</MenuItem>
                       <MenuItem onClick={handleClose}>Logout</MenuItem>
                     </Menu>
                   </div>
