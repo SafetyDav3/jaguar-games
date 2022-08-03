@@ -9,3 +9,9 @@ export const searchGame = (searchTerm) => {
         `https://api.rawg.io/api/games?key=${process.env.REACT_APP_RAWG_SECRET}&page=1&page_size=10&search=${searchTerm}`
     );
 }
+
+export const getGame = (gameId) => {
+    return fetch(
+        `https://api.rawg.io/api/games/${gameId}?key=${process.env.REACT_APP_RAWG_SECRET}`
+    );
+}
