@@ -18,9 +18,20 @@ import CardMedia from "@mui/material/CardMedia";
 // const pages = ['Logout'];
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const ResponsiveAppBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const user = data?.user
+    if (!user) {
+        return 'No user found'
+    }
+    return (
+        <div>
+            <h1>Welcome, {user.username}</h1>
+            <p>{user.email}</p>
+            <p>{user._id}</p>
+            <p>{user.savedGames[0].name}</p>
+            <button onClick={Auth.logout}>Logout</button>
+        </div>
+    )
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -169,7 +180,7 @@ const ResponsiveAppBar = () => {
       </Container>
     </AppBar>
   );
-};
+
 export default ResponsiveAppBar;
 
 

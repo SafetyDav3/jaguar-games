@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { USER } from "../utils/queries";
-import { DELETE_GAME } from "../utils/mutations";
+import { DELETE_GAME, SAVE_GAME } from "../utils/mutations";
 import Auth from "../utils/auth";
 import ResponsiveAppBar from "./db";
 
@@ -30,7 +30,7 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [gameId , setGameId] = useState("");
   useEffect(() => {getTopTen()}, [])
-
+  const [saveGame] = useMutation(SAVE_GAME)
   const navigate = useNavigate();
   // const currentUser = Auth.loggedIn();
   // const { loading, error, data } = useQuery(USER, {
@@ -53,11 +53,10 @@ const Dashboard = () => {
         id: game.id,
         name: game.name,
         background_image: game.background_image,
-        esrb_rating: game.esrb_rating.name,
+        esrb_rating: game.esrb_rating?.name,
         rating: game.rating,
         released: game.released,
       }));
-      console.log(gameData);
       setGameList(gameData)
     } catch (error) {
       console.log(error);
@@ -116,6 +115,32 @@ const Dashboard = () => {
       console.log(error);
     }
   };
+
+  const handleSave = async (gameId) => {
+
+    const checkpoint = gameList.find((game) => game.id === gameId)
+    console.log(checkpoint)
+    const token = Auth.loggedIn() ? Auth.getToken() : null
+
+    if (!token) {
+      return false
+    }
+
+    try {
+      await saveGame({
+        variables: {
+          gameId: checkpoint.id,
+          name: checkpoint.name,
+          backgroundImage: checkpoint.background_image,
+          esrbRating: checkpoint.esrb_rating,
+          rating: checkpoint.rating,
+          released: checkpoint.released,
+        }
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
 // ↑↑↑ API Calls End ↑↑↑
 
 
@@ -207,7 +232,7 @@ const Dashboard = () => {
                       startIcon={<SaveIcon />}
                       variant="contained"
                       size="small"
-                      onClick={() => alert("hello")}
+                      onClick={() => handleSave(game.id)}
                     >
                       Save to My Library
                     </Button>
