@@ -119,7 +119,7 @@ const Profile = () => {
 
   const handleDelete = async (gameId) => {
 
-    const checkpoint = gameList.find((game) => game.gameId === gameId)
+    const checkpoint = gameList.find((game) => game.id === gameId)
     console.log(checkpoint.id)
     const token = Auth.loggedIn() ? Auth.getToken() : null
 
