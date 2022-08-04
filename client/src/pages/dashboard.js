@@ -52,7 +52,7 @@ const Dashboard = () => {
         id: game.id,
         name: game.name,
         background_image: game.background_image,
-        esrb_rating: game.esrb_rating.name,
+        esrb_rating: game.esrb_rating?.name,
         rating: game.rating,
         released: game.released,
       }));
@@ -130,10 +130,10 @@ const Dashboard = () => {
         variables: {
           gameId: checkpoint.id,
           name: checkpoint.name,
-          background_image: checkpoint.background_image,
-          esrb_rating: checkpoint.esrb_rating,
+          backgroundImage: checkpoint.background_image,
+          esrbRating: checkpoint.esrb_rating,
           rating: checkpoint.rating,
-          released: checkpoint.released
+          released: checkpoint.released,
         }
       })
     } catch (err) {

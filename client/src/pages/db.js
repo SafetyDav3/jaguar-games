@@ -26,7 +26,7 @@ const Board = () => {
             <h1>Welcome, {user.username}</h1>
             <p>{user.email}</p>
             <p>{user._id}</p>
-            <p>{user.savedGames[1].name}</p>
+            <p>{user.savedGames[0].name}</p>
             <button onClick={Auth.logout}>Logout</button>
         </div>
     )

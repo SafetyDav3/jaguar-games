@@ -9,7 +9,7 @@ const typeDefs = gql`
         released: String
         background_image: String
         website: String
-        rating: Int
+        rating: Float
         metacritic_url: String
         esrb_rating: String
         platforms: [String]
@@ -45,7 +45,7 @@ const typeDefs = gql`
             released: String
             background_image: String
             website: String
-            rating: Int
+            rating: Float
             metacritic_url: String
             esrb_rating: String
             platforms: [String]

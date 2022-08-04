@@ -59,6 +59,7 @@ const resolvers = {
         },
         //add videogame
         saveGame: async (parent, {gameId, name, description, metacritic, released, background_image, website, rating, metacritic_url, esrb_rating, platforms}, context) => {
+            console.log(context.user)
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(
                     {_id: context.user._id},
