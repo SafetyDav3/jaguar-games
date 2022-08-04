@@ -34,6 +34,7 @@ const Profile = () => {
   const [gameList, setGameList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [gameId, setGameId] = useState("");
+  const [saveOrDelete, setSaveOrDelete] = useState(false)
   // useEffect(() => {getLibrary()}, [])
   const [deleteGame] = useMutation(DELETE_GAME);
   const navigate = useNavigate();
@@ -86,6 +87,7 @@ const Profile = () => {
         released: game.released,
       }));
       setGameList(gameData);
+      setSaveOrDelete(true)
       setSearchTerm("");
     } catch (error) {
       console.log(error);
@@ -141,9 +143,8 @@ const Profile = () => {
   if (!user) {
     return "No user found";
   }
-
-  const getLibrary = () => {
-    const library = user.savedGames.map((game) => ({
+  console.log(data?.user?.savedGames)
+    const finalGamesList = gameList?.length > 0 ? gameList : user.savedGames.map((game) => ({
       gameId: game.gameId,
       name: game.name,
       background_image: game.background_image,
@@ -151,14 +152,12 @@ const Profile = () => {
       rating: game.rating,
       released: game.released,
     }));
-    console.log(library);
-    setGameList(library);
-  };
+    // console.log(library);
 
   return (
     <>
       <Container maxWidth="xl">
-        <div className="App" onLoad={() => getLibrary()}>
+        <div className="App" >
           <header className="App-header">
             <AppBar color="secondary">
               <Toolbar>
@@ -274,7 +273,7 @@ const Profile = () => {
               alignItems="stretch"
               style={{ padding: 20 }}
             >
-              {gameList.map((game) => {
+              {finalGamesList.map((game) => {
                 return (
                   <Grid item xs={12} sm={6} md={4} xl={3}>
                     <Card
