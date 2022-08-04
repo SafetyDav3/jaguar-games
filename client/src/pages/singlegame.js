@@ -157,7 +157,7 @@ const Dashboard = () => {
               </AppBar>
             </Box>
 
-            <Card style={{ margin: 20 }}>
+            <Card style={{ margin: 20 }} >
               <CardMedia
                 component="img"
                 alt="picture of jaguar games logo"
@@ -192,6 +192,7 @@ const Dashboard = () => {
                   <CardActions>
                   <Button
                         style={{ marginLeft: 55 }}
+                        color="secondary"
                         startIcon={<SaveIcon />}
                         variant="contained"
                         size="small"

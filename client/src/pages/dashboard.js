@@ -184,6 +184,7 @@ const Dashboard = () => {
 
             <Button
               variant="contained"
+              color="secondary"
               size="small"
               onClick={() => searchGames()}
             >
@@ -194,10 +195,10 @@ const Dashboard = () => {
               Current Top 10 Games
             </Typography>
 
-            <Grid container spacing={5} justify="center" alignItems="stretch">
+            <Grid container spacing={5} justify="center" alignItems="stretch" style={{padding: 20}}>
               {gameList.map((game) => {
                 return (
-              <Grid item xs={10} sm={5} md={5} xl={3}>
+              <Grid item xs={12} sm={6} md={4} xl={3} >
                 <Card
                   key={game.id}
                   style={{
@@ -227,6 +228,7 @@ const Dashboard = () => {
                     {Auth.loggedIn() && (
                     <Button
                       style={{ marginLeft: 45 }}
+                      color="secondary"
                       startIcon={<SaveIcon />}
                       variant="contained"
                       size="small"

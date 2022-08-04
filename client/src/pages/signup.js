@@ -191,6 +191,7 @@ const Signup = () => {
 
               <Button
                 style={{ marginBottom: 200, marginTop: 20 }}
+                color="secondary"
                 variant="contained"
                 size="small"
                 type="submit"
