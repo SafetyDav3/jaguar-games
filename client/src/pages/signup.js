@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
-import { useQuery } from "@apollo/client"
+import { useQuery, useMutation } from "@apollo/client"
 import { USER } from "../utils/queries"
+import { ADD_USER } from "../utils/mutations"
 import Auth from "../utils/auth"
 
 import Button from '@mui/material/Button'
@@ -23,14 +24,19 @@ import React, {useState} from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-const Dashboard = () => {
+const Signup = () => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
+  const [email, setEmail] = useState('')
+  const [emailConfirm, setEmailConfirm] = useState('')
+
+
+  const [addUser] = useMutation(ADD_USER)
+
+
   const navigate = useNavigate()
-  const currentUser = Auth.loggedIn()
-  const { loading, error, data } = useQuery(USER, {
-    variables: {
-      _id: currentUser?.data?._id
-    }
-  })
+ 
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -83,17 +89,33 @@ const Dashboard = () => {
     setAnchorEl(null);
   };
 
-  if (!currentUser) {
-    navigate('/login')
-  }
-  if (loading) return 'Loading...'
-  if (error) return `Error! ${error.message}`
-
-  const user = data?.user
-  if (!user) {
-    return 'No user found'
-  }
-
+  const handleSubmit = async e => {
+    e.preventDefault()
+    if (email !== emailConfirm) {
+      return console.error('Emails must match')
+    } 
+    
+    if (password !== passwordConfirm) {
+      return console.error('Passwords must match')
+    }
+    try {
+      const {data} = await addUser({
+          variables: {
+              username,
+              password, 
+              email
+          }
+      })
+      Auth.login(data.addUser.token)
+    } catch (err) {
+      console.error(err)
+    }
+    setUsername('')
+    setEmail('')
+    setEmailConfirm('')
+    setPassword('')
+    setPasswordConfirm('')
+} 
 
   return (
     <>
@@ -160,21 +182,22 @@ const Dashboard = () => {
                 image="./images/red-jaguar-games.png"
               />
             </Card>
+            <form onSubmit={handleSubmit}>
+              <TextField required variant="outlined" type="text" label="Username" helperText="Please enter your username" onChange={e => setUsername(e.target.value)} />
+              <TextField required variant="outlined" type="email" label="Email" helperText="Please enter your email" onChange={e => setEmail(e.target.value)} />
+              <TextField required variant="outlined" type="email" label="Confirm Email" helperText="Please re-enter your email" onChange={e => setEmailConfirm(e.target.value)} />
+              <TextField required variant="outlined" type="password" label="Password" helperText="Please enter your password" onChange={e => setPassword(e.target.value)} />
+              <TextField required variant="outlined" type="password" label="Confirm Password" helperText="Please re-enter your Password" onChange={e => setPasswordConfirm(e.target.value)} />
 
-            <TextField variant="outlined" type="email" label="Email" helperText="Please enter your email" />
-            <TextField variant="outlined" type="email" label="Confirm Email" helperText="Please re-enter your email" />
-            <TextField variant="outlined" type="password" label="Password" helperText="Please enter your password" />
-            <TextField variant="outlined" type="password" label="Confirm Password" helperText="Please re-enter your Password" />
-
-            <Button
-              style={{ marginBottom: 200, marginTop: 20 }}
-              variant="contained"
-              size="small"
-              href="#"
-              onClick={() => alert('hello')}
-            >
-              Create Account
-            </Button>
+              <Button
+                style={{ marginBottom: 200, marginTop: 20 }}
+                variant="contained"
+                size="small"
+                type="submit"
+              >
+                Create Account
+              </Button>
+            </form>
 
           </header>
         </div>
@@ -183,4 +206,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default Signup

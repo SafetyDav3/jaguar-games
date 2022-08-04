@@ -14,6 +14,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
+<<<<<<< HEAD
 const drawerWidth = 240;
 const navItems = ['Profile', 'Login', 'Dashboard'];
 
@@ -107,3 +108,34 @@ DrawerAppBar.propTypes = {
 };
 
 export default DrawerAppBar;
+=======
+const Board = () => {
+    const navigate = useNavigate()
+    const currentUser = Auth.loggedIn()
+    const {loading, error, data} = useQuery(USER, {
+        variables: {
+            _id: currentUser?.data?._id
+        }
+    })
+    if (!currentUser) {
+        navigate('/login')
+    }
+    if (loading) return 'Loading...'
+    if (error) return `Error! ${error.message}`
+
+    const user = data?.user
+    if (!user) {
+        return 'No user found'
+    }
+    return (
+        <div>
+            <h1>Welcome, {user.username}</h1>
+            <p>{user.email}</p>
+            <p>{user.savedGames}</p>
+            <button onClick={Auth.logout}>Logout</button>
+        </div>
+    )
+}
+
+export default Board
+>>>>>>> a6d052bf30a297fcf0b2ce215ed61a897a48f948
