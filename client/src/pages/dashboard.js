@@ -4,7 +4,7 @@ import { USER } from "../utils/queries";
 import { DELETE_GAME, SAVE_GAME } from "../utils/mutations";
 import Auth from "../utils/auth";
 
-import React,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import Button from "@mui/material/Button";
 import SaveIcon from "@mui/icons-material/Save";
@@ -21,18 +21,20 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
 
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 // API calls
 import { topTen, searchGame, getGame } from "../utils/api";
 
 const Dashboard = () => {
-  const [gameList, setGameList] = useState([])
+  const [gameList, setGameList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [gameId, setGameId] = useState("");
-  useEffect(() => { getTopTen() }, [])
-  const [saveGame] = useMutation(SAVE_GAME)
+  useEffect(() => {
+    getTopTen();
+  }, []);
+  const [saveGame] = useMutation(SAVE_GAME);
   const navigate = useNavigate();
   // const currentUser = Auth.loggedIn();
   // const { loading, error, data } = useQuery(USER, {
@@ -59,7 +61,7 @@ const Dashboard = () => {
         rating: game.rating,
         released: game.released,
       }));
-      setGameList(gameData)
+      setGameList(gameData);
     } catch (error) {
       console.log(error);
     }
@@ -77,12 +79,12 @@ const Dashboard = () => {
   // Return search results
   const searchGames = async () => {
     if (!searchTerm) {
-      return false
+      return false;
     }
     try {
       const response = await searchGame(searchTerm);
       if (!response.ok) {
-        throw new Error('Something went wrong')
+        throw new Error("Something went wrong");
       }
       const data = await response.json();
       // console.log(data);
@@ -94,9 +96,8 @@ const Dashboard = () => {
         rating: game.rating,
         released: game.released,
       }));
-      setGameList(gameData)
-      setSearchTerm('')
-
+      setGameList(gameData);
+      setSearchTerm("");
     } catch (error) {
       console.log(error);
     }
@@ -128,13 +129,12 @@ const Dashboard = () => {
   };
 
   const handleSave = async (gameId) => {
-
-    const checkpoint = gameList.find((game) => game.id === gameId)
-    console.log(checkpoint)
-    const token = Auth.loggedIn() ? Auth.getToken() : null
+    const checkpoint = gameList.find((game) => game.id === gameId);
+    console.log(checkpoint);
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
-      return false
+      return false;
     }
 
     try {
@@ -146,15 +146,13 @@ const Dashboard = () => {
           esrbRating: checkpoint.esrb_rating,
           rating: checkpoint.rating,
           released: checkpoint.released,
-        }
-      })
+        },
+      });
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
-  }
+  };
   // ↑↑↑ API Calls End ↑↑↑
-
-
 
   // const user = data?.user;
   // if (!user) {
@@ -167,7 +165,7 @@ const Dashboard = () => {
           <header className="App-header">
             <AppBar color="secondary">
               <Toolbar>
-              {/* <div>
+                {/* <div>
                     <IconButton
                       size="large"
                       edge="start"
@@ -196,22 +194,50 @@ const Dashboard = () => {
                     </Menu>
                   </div> */}
                 <Typography variant="h6">Jaguar Games</Typography>
-                {Auth.loggedIn() && (
-                  <><Button onClick={Auth.logout}>Logout</Button><Button href="/profile">Profile</Button><Button href="/">Dashboard</Button></>
-                ) || (<><Button href="/login">Login</Button><Button href="/signup">Create Account</Button></>)}
+                {(Auth.loggedIn() && (
+                  <>
+                    <Button onClick={Auth.logout}>Logout</Button>
+                    <Button href="/profile">Profile</Button>
+                    <Button href="/">Dashboard</Button>
+                  </>
+                )) || (
+                  <>
+                    <Button href="/login">Login</Button>
+                    <Button href="/signup">Create Account</Button>
+                  </>
+                )}
               </Toolbar>
             </AppBar>
 
-
-            <Grid container spacing={1} onSubmit={() => searchGames()} columns={1} justify="center" alignItems="stretch" style={{ padding: 20 }}>
-            <Card style={{ margin: 20, height:"100%", width:"100%"}}>
+            <Grid
+              container
+              spacing={1}
+              onSubmit={() => searchGames()}
+              columns={1}
+              justify="center"
+              alignItems="stretch"
+              style={{ padding: 20 }}
+            >
+              <Grid item container justify="center" style={{ height: "90%" }}>
+                <Card
+                  style={{
+                    marginLeft: "25%",
+                    marginRight: "25%",
+                    marginTop: "5%",
+                    marginBottom: "5%",
+                    height: "100%",
+                    width: "100%",
+                    maxWidth: "50%",
+                  }}
+                >
                   <CardMedia
                     component="img"
                     alt="picture of jaguar games logo"
-                    style={{objectFit: "cover" }}
+                    style={{ objectFit: "cover" }}
                     image="./images/red-jaguar-games.png"
                   />
                 </Card>
+              </Grid>
               <Grid item xs={12} sm={12} md={12} xl={12}>
                 <TextField
                   variant="outlined"
@@ -238,10 +264,16 @@ const Dashboard = () => {
               Current Top 10 Games
             </Typography>
 
-            <Grid container spacing={5} justify="center" alignItems="stretch" style={{ padding: 20 }}>
+            <Grid
+              container
+              spacing={5}
+              justify="center"
+              alignItems="stretch"
+              style={{ padding: 20 }}
+            >
               {gameList.map((game) => {
                 return (
-                  <Grid item xs={12} sm={6} md={4} xl={3} >
+                  <Grid item xs={12} sm={6} md={4} xl={3}>
                     <Card
                       key={game.id}
                       style={{
@@ -283,7 +315,7 @@ const Dashboard = () => {
                       </CardActions>
                     </Card>
                   </Grid>
-                )
+                );
               })}
             </Grid>
           </header>
