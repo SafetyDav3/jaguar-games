@@ -124,18 +124,18 @@ const Dashboard = () => {
     if (!token) {
       return false
     }
-
+    
     try {
-      await saveGame({
-        variables: {
-          gameId: checkpoint.id,
-          name: checkpoint.name,
-          background_image: checkpoint.background_image,
-          esrb_rating: checkpoint.esrb_rating,
-          rating: checkpoint.rating,
-          released: checkpoint.released
-        }
-      })
+          await saveGame({
+           variables: {
+             gameId: checkpoint.id,
+             name: checkpoint.name,
+             background_image: checkpoint.background_image,
+             esrb_rating: checkpoint.esrb_rating,
+             rating: checkpoint.rating,
+             released: checkpoint.released,
+           },
+         }); 
     } catch (err) {
       console.error(err)
     }
