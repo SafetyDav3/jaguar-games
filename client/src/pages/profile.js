@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-import { useNavigate } from "react-router-dom"
-import React, { useState } from 'react';
-import { useQuery } from "@apollo/client"
-import { USER } from "../utils/queries"
-import Auth from "../utils/auth"
-=======
 import { useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { USER } from "../utils/queries";
 import { DELETE_GAME, SAVE_GAME } from "../utils/mutations";
 import Auth from "../utils/auth";
->>>>>>> alan
 
 import { useState, useEffect } from "react";
 
@@ -29,14 +21,8 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
 
-<<<<<<< HEAD
-
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-=======
 // API calls
 import { topTen, searchGame, getGame } from "../utils/api";
->>>>>>> alan
 
 const Profile = () => {
   const currentUser = Auth.loggedIn();
@@ -133,7 +119,7 @@ const Profile = () => {
 
   const handleDelete = async (gameId) => {
 
-    const checkpoint = gameList.find((game) => game.gameId === gameId)
+    const checkpoint = gameList.find((game) => game.id === gameId)
     console.log(checkpoint.id)
     const token = Auth.loggedIn() ? Auth.getToken() : null
 
@@ -178,59 +164,6 @@ const Profile = () => {
       <Container maxWidth="xl">
         <div className="App" onLoad={() => getLibrary()}>
           <header className="App-header">
-<<<<<<< HEAD
-            <Box sx={{ flexGrow: 1 }}>
-              <AppBar color="secondary">
-                <Toolbar>
-                  
-                  <IconButton
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="open drawer"
-                    sx={{ mr: 2 }}
-                    id="basic-button"
-                      aria-controls={open ? 'basic-menu' : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={open ? 'true' : undefined}
-                      onClick={handleClick}
-                  >
-                    <MenuIcon />
-                  </IconButton>
-                    <Menu
-                      id="basic-menu"
-                      anchorEl={anchorEl}
-                      open={open}
-                      onClose={handleClose}
-                      MenuListProps={{
-                        'aria-labelledby': 'basic-button',
-                      }}
-                    >
-                      <MenuItem onClick={handleClose}>Dashboard</MenuItem>
-                      <MenuItem onClick={handleClose}>Logout</MenuItem>
-                    </Menu>
-                  
-                  <Typography
-                    variant="h6"
-                    noWrap
-                    component="div"
-                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-                  >
-                    Jaguar Games
-                  </Typography>
-                  <Search>
-                    <SearchIconWrapper>
-                      <SearchIcon />
-                    </SearchIconWrapper>
-                    <StyledInputBase
-                      placeholder="Search Games..."
-                      inputProps={{ 'aria-label': 'search' }}
-                    />
-                  </Search>
-                </Toolbar>
-              </AppBar>
-            </Box>
-=======
             <AppBar color="secondary">
               <Toolbar>
                 <IconButton>
@@ -242,7 +175,6 @@ const Profile = () => {
                 ) || (<><Button href="/login">Login</Button><Button href="/signup">Create Account</Button></>)}
               </Toolbar>
             </AppBar>
->>>>>>> alan
 
             <Card style={{ margin: 20 }}>
               <CardMedia
