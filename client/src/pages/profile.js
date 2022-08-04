@@ -238,7 +238,6 @@ const Profile = () => {
             <Grid
               container
               spacing={1}
-              onSubmit={() => searchGames()}
               justify="center"
               alignItems="stretch"
               style={{ padding: 50 }}
@@ -258,7 +257,6 @@ const Profile = () => {
                   color="secondary"
                   size="small"
                   onClick={() => searchGames()}
-                  type="submit"
                 >
                   Search
                 </Button>

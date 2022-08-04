@@ -204,7 +204,7 @@ const Signup = () => {
             >
               <Grid item xs={12} sm={12} md={12} xl={12}>
                 <form onSubmit={handleSubmit}>
-                  <Grid item xs={12} sm={12} md={12} xl={12}>
+                  <Grid type="submit" item xs={12} sm={12} md={12} xl={12}>
                     <TextField
                       required
                       variant="outlined"
@@ -214,7 +214,7 @@ const Signup = () => {
                       onChange={(e) => setUsername(e.target.value)}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={12} md={12} xl={12}>
+                  <Grid type="submit" item xs={12} sm={12} md={12} xl={12}>
                     <TextField
                       required
                       variant="outlined"
@@ -224,7 +224,7 @@ const Signup = () => {
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={12} md={12} xl={12}>
+                  <Grid type="submit" item xs={12} sm={12} md={12} xl={12}>
                     <TextField
                       required
                       variant="outlined"
@@ -234,7 +234,7 @@ const Signup = () => {
                       onChange={(e) => setEmailConfirm(e.target.value)}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={12} md={12} xl={12}>
+                  <Grid type="submit" item xs={12} sm={12} md={12} xl={12}>
                     <TextField
                       required
                       variant="outlined"
@@ -244,7 +244,7 @@ const Signup = () => {
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={12} md={12} xl={12}>
+                  <Grid type="submit" item xs={12} sm={12} md={12} xl={12}>
                     <TextField
                       required
                       variant="outlined"

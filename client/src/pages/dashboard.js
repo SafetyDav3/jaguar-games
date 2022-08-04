@@ -212,7 +212,6 @@ const Dashboard = () => {
             <Grid
               container
               spacing={1}
-              onSubmit={() => searchGames()}
               columns={1}
               justify="center"
               alignItems="stretch"
@@ -253,7 +252,6 @@ const Dashboard = () => {
                   color="secondary"
                   size="small"
                   onClick={() => searchGames()}
-                  type="submit"
                 >
                   Search
                 </Button>
