@@ -195,6 +195,7 @@ const Dashboard = () => {
                   </CardContent>
                   <CardActions>
                     <Button
+                      color="secondary"
                       style={{ marginLeft: 45 }}
                       startIcon={<RemoveCircleIcon />}
                       variant="contained"
@@ -229,6 +230,7 @@ const Dashboard = () => {
                   </CardContent>
                   <CardActions>
                     <Button
+                      color="secondary"
                       style={{ marginLeft: 45 }}
                       startIcon={<RemoveCircleIcon />}
                       variant="contained"
@@ -263,6 +265,7 @@ const Dashboard = () => {
                   </CardContent>
                   <CardActions>
                     <Button
+                      color="secondary"
                       style={{ marginLeft: 45 }}
                       startIcon={<RemoveCircleIcon />}
                       variant="contained"
@@ -297,6 +300,7 @@ const Dashboard = () => {
                   </CardContent>
                   <CardActions>
                     <Button
+                      color="secondary"
                       style={{ marginLeft: 45 }}
                       startIcon={<RemoveCircleIcon />}
                       variant="contained"

@@ -191,6 +191,7 @@ const Dashboard = () => {
                   </CardContent>
                   <CardActions>
                   <Button
+                    color="secondary"
                         style={{ marginLeft: 55 }}
                         startIcon={<SaveIcon />}
                         variant="contained"

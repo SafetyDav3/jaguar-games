@@ -165,6 +165,7 @@ const Dashboard = () => {
             <TextField variant="outlined" type="password" label="Password" helperText="Please enter your password" />
 
             <Button
+              color="secondary"
               style={{ marginBottom: 300, marginTop: 20 }}
               variant="contained"
               size="small"
