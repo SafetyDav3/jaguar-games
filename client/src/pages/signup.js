@@ -14,13 +14,14 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import TextField from '@mui/material/TextField'
+import Grid from "@mui/material/Grid";
 
 import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
@@ -36,7 +37,7 @@ const Signup = () => {
 
 
   const navigate = useNavigate()
- 
+
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -79,7 +80,7 @@ const Signup = () => {
       },
     },
   }));
-  
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -93,18 +94,18 @@ const Signup = () => {
     e.preventDefault()
     if (email !== emailConfirm) {
       return console.error('Emails must match')
-    } 
-    
+    }
+
     if (password !== passwordConfirm) {
       return console.error('Passwords must match')
     }
     try {
-      const {data} = await addUser({
-          variables: {
-              username,
-              password, 
-              email
-          }
+      const { data } = await addUser({
+        variables: {
+          username,
+          password,
+          email
+        }
       })
       Auth.login(data.addUser.token)
     } catch (err) {
@@ -115,31 +116,30 @@ const Signup = () => {
     setEmailConfirm('')
     setPassword('')
     setPasswordConfirm('')
-} 
+  }
 
   return (
     <>
       <Container maxWidth="xl">
         <div className="App">
           <header className="App-header">
-            <Box sx={{ flexGrow: 1 }}>
-              <AppBar color="secondary">
-                <Toolbar>
-                  <div>
-                  <IconButton
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="open drawer"
-                    sx={{ mr: 2 }}
-                    id="basic-button"
+            <AppBar color="secondary">
+              <Toolbar>
+                {/* <div>
+                    <IconButton
+                      size="large"
+                      edge="start"
+                      color="inherit"
+                      aria-label="open drawer"
+                      sx={{ mr: 2 }}
+                      id="basic-button"
                       aria-controls={open ? 'basic-menu' : undefined}
                       aria-haspopup="true"
                       aria-expanded={open ? 'true' : undefined}
                       onClick={handleClick}
-                  >
-                    <MenuIcon />
-                  </IconButton>
+                    >
+                      <MenuIcon />
+                    </IconButton>
                     <Menu
                       id="basic-menu"
                       anchorEl={anchorEl}
@@ -152,53 +152,60 @@ const Signup = () => {
                       <MenuItem onClick={handleClose}>Dashboard</MenuItem>
                       <MenuItem onClick={handleClose}>Login</MenuItem>
                     </Menu>
-                  </div>
-                  <Typography
-                    variant="h6"
-                    noWrap
-                    component="div"
-                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-                  >
-                    Jaguar Games
-                  </Typography>
-                  <Search>
-                    <SearchIconWrapper>
-                      <SearchIcon />
-                    </SearchIconWrapper>
-                    <StyledInputBase
-                      placeholder="Search Games..."
-                      inputProps={{ 'aria-label': 'search' }}
-                    />
-                  </Search>
-                </Toolbar>
-              </AppBar>
-            </Box>
+                  </div> */}
+                <Typography variant="h6">Jaguar Games</Typography>
+                {Auth.loggedIn() && (
+                  <><Button onClick={Auth.logout}>Logout</Button><Button href="/profile"></Button><Button href="/">Dashboard</Button></>
+                ) || (<><Button href="/">Dashboard</Button><Button href="/login">Login</Button></>)}
+              </Toolbar>
+            </AppBar>
 
-            <Card style={{ margin: 20 }}>
-              <CardMedia
-                component="img"
-                alt="picture of jaguar games logo"
-                height="200"
-                image="./images/red-jaguar-games.png"
-              />
-            </Card>
-            <form onSubmit={handleSubmit}>
-              <TextField required variant="outlined" type="text" label="Username" helperText="Please enter your username" onChange={e => setUsername(e.target.value)} />
-              <TextField required variant="outlined" type="email" label="Email" helperText="Please enter your email" onChange={e => setEmail(e.target.value)} />
-              <TextField required variant="outlined" type="email" label="Confirm Email" helperText="Please re-enter your email" onChange={e => setEmailConfirm(e.target.value)} />
-              <TextField required variant="outlined" type="password" label="Password" helperText="Please enter your password" onChange={e => setPassword(e.target.value)} />
-              <TextField required variant="outlined" type="password" label="Confirm Password" helperText="Please re-enter your Password" onChange={e => setPasswordConfirm(e.target.value)} />
+            <Grid container spacing={1} justify="center" alignItems="stretch" style={{ padding: 20 }}>
+              <Grid item xs={12} sm={12} md={12} xl={12}>
+                <Card style={{ margin: 20 }}>
+                  <CardMedia
+                    component="img"
+                    alt="picture of jaguar games logo"
+                    height="200"
+                    image="./images/red-jaguar-games.png"
+                  />
+                </Card>
+              </Grid>
+            </Grid>
 
-              <Button
-                style={{ marginBottom: 200, marginTop: 20 }}
-                color="secondary"
-                variant="contained"
-                size="small"
-                type="submit"
-              >
-                Create Account
-              </Button>
-            </form>
+            <Grid container spacing={1} justify="center" alignItems="stretch" style={{ padding: 50 }}>
+              <Grid item xs={12} sm={12} md={12} xl={12}>
+                <form onSubmit={handleSubmit}>
+                  <Grid item xs={12} sm={12} md={12} xl={12}>
+                    <TextField required variant="outlined" type="text" label="Username" helperText="Please enter your username" onChange={e => setUsername(e.target.value)} />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} xl={12}>
+                    <TextField required variant="outlined" type="email" label="Email" helperText="Please enter your email" onChange={e => setEmail(e.target.value)} />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} xl={12}>
+                    <TextField required variant="outlined" type="email" label="Confirm Email" helperText="Please re-enter your email" onChange={e => setEmailConfirm(e.target.value)} />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} xl={12}>
+                    <TextField required variant="outlined" type="password" label="Password" helperText="Please enter your password" onChange={e => setPassword(e.target.value)} />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} xl={12}>
+                    <TextField required variant="outlined" type="password" label="Confirm Password" helperText="Please re-enter your Password" onChange={e => setPasswordConfirm(e.target.value)} />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} xl={12}>
+                    <Button
+                      style={{ marginBottom: 200, marginTop: 20 }}
+                      color="secondary"
+                      variant="contained"
+                      size="small"
+                      type="submit"
+                    >
+                      Create Account
+                    </Button>
+                  </Grid>
+
+                </form>
+              </Grid>
+            </Grid>
 
           </header>
         </div>
