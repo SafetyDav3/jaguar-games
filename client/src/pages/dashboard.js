@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { USER } from "../utils/queries";
 import { DELETE_GAME } from "../utils/mutations";
 import Auth from "../utils/auth";
-import DrawerAppBar from "./db";
+import ResponsiveAppBar from "./db";
 
 import { useState, useEffect } from "react";
 
@@ -130,12 +130,12 @@ const Dashboard = () => {
         <div className="App">
           <header className="App-header">
             {/* <AppBar color="secondary"> */}
-              <DrawerAppBar />
+             <ResponsiveAppBar /> 
               {/* <Toolbar>
-                <IconButton>
+                <IconButton >
                   <MenuIcon />
                 </IconButton>
-                <Typography variant="h6">Jaguar Games</Typography>
+                <Typography variant="h6" >Jaguar Games</Typography>
                 {Auth.loggedIn() && (
                   <><Button onClick={Auth.logout}>Logout</Button><Button href="/profile"></Button></>
                 ) || (<><Button href="/login">Login</Button><Button href="/signup">Create Account</Button></>)}
@@ -145,9 +145,9 @@ const Dashboard = () => {
             <Card style={{ margin: 20 }}>
               <CardMedia
                 component="img"
-                alt="picture of jaguar games logo"
+                alt="banner with jaguar games title"
                 height="200"
-                image=".images/red-jaguar-games.png"
+                image="./images/jag-hero.png"
               />
             </Card>
 

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import React, { useState } from 'react';
 import { useQuery } from "@apollo/client"
 import { USER } from "../utils/queries"
 import Auth from "../utils/auth"
@@ -22,7 +23,7 @@ import Box from '@mui/material/Box';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 
-import React, {useState} from 'react';
+
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
@@ -106,7 +107,7 @@ const Dashboard = () => {
             <Box sx={{ flexGrow: 1 }}>
               <AppBar color="secondary">
                 <Toolbar>
-                  <div>
+                  
                   <IconButton
                     size="large"
                     edge="start"
@@ -133,7 +134,7 @@ const Dashboard = () => {
                       <MenuItem onClick={handleClose}>Dashboard</MenuItem>
                       <MenuItem onClick={handleClose}>Logout</MenuItem>
                     </Menu>
-                  </div>
+                  
                   <Typography
                     variant="h6"
                     noWrap
