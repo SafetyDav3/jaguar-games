@@ -119,8 +119,6 @@ const Profile = () => {
 
   const handleDelete = async (gameId) => {
 
-    const checkpoint = gameList.find((game) => game.id === gameId)
-    console.log(checkpoint.id)
     const token = Auth.loggedIn() ? Auth.getToken() : null
 
     if (!token) {
@@ -130,13 +128,13 @@ const Profile = () => {
     try {
       await deleteGame({
         variables: {
-          gameId: checkpoint.id,
-
+          gameId: gameId,
         }
       })
     } catch (err) {
       console.error(err)
     }
+    window.location.reload(false)
   }
 // ↑↑↑ API Calls End ↑↑↑
 
@@ -156,6 +154,7 @@ const Profile = () => {
       rating: game.rating,
       released: game.released,
     }))
+    console.log(library)
     setGameList(library) 
   }
 
@@ -225,7 +224,7 @@ const Profile = () => {
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                      {game.name}{game.gameId}
+                      {game.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                       Release Date: {game.released}
@@ -237,6 +236,7 @@ const Profile = () => {
                   <CardActions>
                     {Auth.loggedIn() && (
                     <Button
+                      key={game.gameId}
                       style={{ marginLeft: 45 }}
                       startIcon={<SaveIcon />}
                       variant="contained"
