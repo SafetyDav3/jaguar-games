@@ -20,7 +20,7 @@ import { styled, alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-
+import {Link} from 'react-router-dom'
 import React, { useState } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -154,13 +154,13 @@ const Signup = () => {
                 {(Auth.loggedIn() && (
                   <>
                     <Button onClick={Auth.logout}>Logout</Button>
-                    <Button href="/profile"></Button>
-                    <Button href="/">Dashboard</Button>
+                    <Link to="/profile" style={{textDecoration: "none"}}><Button>Profile</Button></Link>
+                    <Link to="/" style={{ textDecoration: "none"}}><Button>Dashboard</Button></Link>
                   </>
                 )) || (
                   <>
-                    <Button href="/">Dashboard</Button>
-                    <Button href="/login">Login</Button>
+                    <Link to="/" style={{ textDecoration: "none"}}><Button>Dashboard</Button></Link>
+                    <Link to="/login" style={{textDecoration: "none"}}><Button>Login</Button></Link>
                   </>
                 )}
               </Toolbar>

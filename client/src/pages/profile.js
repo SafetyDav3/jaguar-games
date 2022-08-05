@@ -20,7 +20,7 @@ import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
-
+import {Link} from 'react-router-dom'
 // API calls
 import { topTen, searchGame, getGame } from "../utils/api";
 
@@ -193,13 +193,13 @@ const Profile = () => {
                 {(Auth.loggedIn() && (
                   <>
                     <Button onClick={Auth.logout}>Logout</Button>
-                    <Button href="/">Dashboard</Button>
+                    <Link to="/" style={{ textDecoration: "none"}}><Button>Dashboard</Button></Link>
                   </>
                 )) || (
                   <>
-                    <Button href="/">Dashboard</Button>
-                    <Button href="/login">Login</Button>
-                    <Button href="/signup">Create Account</Button>
+                   <Link to="/" style={{ textDecoration: "none"}}><Button>Dashboard</Button></Link>
+                    <Link to="/login" style={{textDecoration: "none"}}><Button>Login</Button></Link>
+                    <Link to="/signup" style={{textDecoration: "none"}}><Button>Create Account</Button></Link>
                   </>
                 )}
               </Toolbar>

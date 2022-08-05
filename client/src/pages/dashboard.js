@@ -200,13 +200,12 @@ const Dashboard = () => {
                   <>
                     <Button onClick={Auth.logout}>Logout</Button>
                     <Link to="/profile" style={{textDecoration: "none"}}><Button>Profile</Button></Link>
-                    <Link to="/">Dashboard</Link>
+                    <Link to="/" style={{ textDecoration: "none"}}><Button>Dashboard</Button></Link>
                   </>
                 )) || (
                   <>
                     <Link to="/login" style={{textDecoration: "none"}}><Button>Login</Button></Link>
-                    <Link to="/login">Login</Link>
-                    <Link to="/signup">Create Account</Link>
+                    <Link to="/signup" style={{textDecoration: "none"}}><Button>Create Account</Button></Link>
                   </>
                 )}
               </Toolbar>

@@ -24,6 +24,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import React, { useState } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import {Link} from 'react-router-dom'
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -132,13 +133,13 @@ const Login = () => {
                 {(Auth.loggedIn() && (
                   <>
                     <Button onClick={Auth.logout}>Logout</Button>
-                    <Button href="/profile"></Button>
-                    <Button href="/">Dashboard</Button>
+                    <Link to="/profile" style={{textDecoration: "none"}}><Button>Profile</Button></Link>
+                    <Link to="/" style={{ textDecoration: "none"}}><Button>Dashboard</Button></Link>
                   </>
                 )) || (
                   <>
-                    <Button href="/">Dashboard</Button>
-                    <Button href="/signup">Create Account</Button>
+                    <Link to="/" style={{ textDecoration: "none"}}><Button>Dashboard</Button></Link>
+                    <Link to="/signup" style={{textDecoration: "none"}}><Button>Create Account</Button></Link>
                   </>
                 )}
               </Toolbar>
