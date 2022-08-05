@@ -204,6 +204,7 @@ const Dashboard = () => {
                   </>
                 )) || (
                   <>
+                    <Link to="/login" style={{textDecoration: "none"}}><Button>Login</Button></Link>
                     <Link to="/login">Login</Link>
                     <Link to="/signup">Create Account</Link>
                   </>
