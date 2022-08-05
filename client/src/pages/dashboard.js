@@ -3,6 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { USER } from "../utils/queries";
 import { DELETE_GAME, SAVE_GAME } from "../utils/mutations";
 import Auth from "../utils/auth";
+import Profile from "./profile"
 
 import React, { useState, useEffect } from "react";
 
@@ -20,6 +21,7 @@ import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
+import {Link} from 'react-router-dom'
 
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -197,13 +199,13 @@ const Dashboard = () => {
                 {(Auth.loggedIn() && (
                   <>
                     <Button onClick={Auth.logout}>Logout</Button>
-                    <Button href="/profile">Profile</Button>
-                    <Button href="/">Dashboard</Button>
+                    <Link to="/profile" style={{textDecoration: "none"}}><Button>Profile</Button></Link>
+                    <Link to="/">Dashboard</Link>
                   </>
                 )) || (
                   <>
-                    <Button href="/login">Login</Button>
-                    <Button href="/signup">Create Account</Button>
+                    <Link to="/login">Login</Link>
+                    <Link to="/signup">Create Account</Link>
                   </>
                 )}
               </Toolbar>
